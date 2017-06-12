@@ -9,15 +9,33 @@ class PredictForm
   IMG_CHANNEL = 3
   URL = "https://ml.googleapis.com/v1beta1/#{ENV["PROJECT_NAME"]}:predict".freeze
   SCOPE = ["https://www.googleapis.com/auth/cloud-platform"].freeze
+  CLASSES = { 0 => :cat, 1 => :dog }
   @@token = ""
 
-  attr_accessor :file, :image, :matrix_data, :result
+  attr_accessor :file, :image, :matrix_data, :response
 
   validates :file, presence: true
 
+  def base64_image
+    "data:image/#{image.format};base64," + Base64.encode64(image.to_blob).gsub(/\n/, "")
+  end
+
+  def result
+    return @result if @result.present?
+    cat = response[CLASSES.key(:cat)]
+    dog = response[CLASSES.key(:dog)]
+    @result = if cat > dog
+                { result: :cat, per: cat }
+              elsif dog > cat
+                { result: :dog, per: dog }
+              else
+                { result: :cat_or_dog, per: cat }
+              end
+  end
+
   def predict
     begin
-      self.result = RestClient.post(URL, file_to_json, header)
+      self.response = JSON.parse(RestClient.post(URL, file_to_json, header).body)["predictions"].first["outputs"]
     rescue RestClient::Unauthorized => e
       p e
       refresh_token

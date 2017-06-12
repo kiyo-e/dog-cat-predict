@@ -1,0 +1,4 @@
+    <%= form_with model: PredictForm.new, url: predict_path, multipart: true, class: "form-inline", data: { remote: false } do |f| %>
+        <%= f.file_field :file, required: true, class: "form-control mr-sm-2" %>
+        <%= f.submit :submit, class: "btn btn-outline-success", data: { disabled_with: "送>信中..." } %>
+    <% end %>

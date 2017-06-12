@@ -5,10 +5,19 @@
     </p>
 
     <% if @form.image.present? %>
+      <p>
+        アップロードファイル<br>
+        <%= image_tag @form.base64_image %>
+      </p>
     <% end %>
 
     <% if @form.result.present? %>
-      <%= @form.result %>
+      <p>結果：<%= @form.result[:result] %></p>
+      <p>確率：<%= @form.result[:per] %></p>
     <% end %>
+
+   <div class="lead">
+     <%= render "form" %>
+   </div>
 </div>
 
