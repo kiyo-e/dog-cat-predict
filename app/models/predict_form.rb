@@ -74,7 +74,7 @@ class PredictForm
   end
 
   def file_resize
-    self.image = Magick::ImageList.new(file.tempfile.path)
+    self.image = Magick::ImageList.new(file.tempfile.path).resize_to_fit(300, 300)
   end
 
   def file_to_matrix
