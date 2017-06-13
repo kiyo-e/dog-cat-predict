@@ -4,15 +4,13 @@
       CNN実装のdog cat判定の実装.
     </p>
 
-    <% if @form.image.present? %>
-      <p class="upload_image">
+    <% if  @form.result.present? %>
+      <p>
         アップロードファイル<br>
-        <%= image_tag @form.base64_image %>
+        <%= image_tag @form.base64_image %><br>
       </p>
-    <% end %>
 
-    <% if @form.result.present? %>
-      <p>結果：<%= @form.result[:result] %></p>
+      <p class="upload_image">結果：<%= @form.result[:result] %></p>
     <% end %>
 
    <div class="lead">
