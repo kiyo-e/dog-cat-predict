@@ -1,6 +1,5 @@
 class TopController < ApplicationController
   def index
-    @form = PredictForm.new
   end
 
   def predict
@@ -11,8 +10,6 @@ class TopController < ApplicationController
 
   private
   def predict_form_params
-    params.require(:predict_form).permit(
-      :file
-    )
+    params.require(:predict_form).permit(:file)
   end
 end
