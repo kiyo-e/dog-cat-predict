@@ -41,8 +41,8 @@ class PredictForm
       refresh_token
 
       unless @refreshed
-        self.predict
         @refreshed = true
+        self.predict
       end
     end
   end
